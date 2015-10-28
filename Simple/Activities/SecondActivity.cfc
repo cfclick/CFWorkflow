@@ -14,13 +14,13 @@ component  implements="IActivity" extends="BaseActivity" output="false" accessor
 	
 	public void function onActivityStart()
 	{
-		sleep(3000);
+		
 		super.onActivityStart(this.getActivityCollection());
 	}
 	
 	public void function predecessor()
 	{
-		sleep(3000);
+		
 		super.predecessor();
 		if( !isNull(predecessorActivity)  && isInstanceOf( predecessorActivity, "IActivity" ) )	
 			predecessorActivity.process();			
@@ -28,7 +28,7 @@ component  implements="IActivity" extends="BaseActivity" output="false" accessor
 	
 	public boolean function execute()
 	{
-		sleep(3000);
+		
 		return super.execute(this);
 	}
 	
@@ -36,7 +36,7 @@ component  implements="IActivity" extends="BaseActivity" output="false" accessor
 	{
 		try
         {
-        	sleep(3000);
+        	
 			var data = this.getActivityCollection();
 			if( isNull(data) || !structKeyExists( data,"firstName" ) )
 				writelog( text="I'm SecondActivity process running", file=super.getLogFileName() );
@@ -45,7 +45,7 @@ component  implements="IActivity" extends="BaseActivity" output="false" accessor
         }
         catch(Any e)
         {
-        	writelog( text=e.message, application=false, file=super.getExceptionLogFileName() );
+        	writelog( text=e.message, application=super.isApplication(), file=super.getExceptionLogFileName() );
         	continue;
         }
 
@@ -53,7 +53,7 @@ component  implements="IActivity" extends="BaseActivity" output="false" accessor
 	
 	public void function successor()
 	{
-		sleep(3000);
+		
 		super.successor();
 		
 		try
@@ -67,7 +67,7 @@ component  implements="IActivity" extends="BaseActivity" output="false" accessor
         }
         catch(Any e)
         {
-        	writelog( text=e.message, application=false, file=super.getExceptionLogFileName() );
+        	writelog( text=e.message, application=super.isApplication(), file=super.getExceptionLogFileName() );
         	continue;
         }
 
@@ -75,7 +75,7 @@ component  implements="IActivity" extends="BaseActivity" output="false" accessor
 	
 	public void function onActivityEnd()
 	{
-		sleep(3000);
+		
 		super.onActivityEnd();
 	}
 

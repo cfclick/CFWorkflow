@@ -2,12 +2,20 @@
 {
 	import IActivity;		
 	
-	package string function getLogFileName(){
+	private string function getLogFileName(){
 		return "CFWF";
 	}
 	
 	private string function getExceptionLogFileName(){
 		return "CFWFExceptions";
+	}
+	
+	private boolean function isApplication(){
+		return true;
+	}
+	
+	private numeric function getSleepTime(){
+		return 3000;
 	}
 	
 	public function init( IActivity successor)
@@ -16,12 +24,12 @@
         {
         	variables.log = {};
 			variables.meta = getMetaData(successor);
-			writelog( text="----------------------------#meta.name#--------------------------------", application=false, file=getLogFileName() );
-			writelog( text="#meta.name# Activity initialization started", application=false, file=getLogFileName() );
+			writelog( text="----------------------------#meta.name#--------------------------------", application=isApplication(), file=getLogFileName() );
+			writelog( text="#meta.name# Activity initialization started", application=isApplication(), file=getLogFileName() );
         }
         catch(Any e)
         {
-        	writelog( text=e.message, application=false, file=getExceptionLogFileName() );
+        	writelog( text=e.message, application=isApplication(), file=getExceptionLogFileName() );
         }
 
 	}
@@ -30,11 +38,11 @@
 	{
 		try
         {
-        	writelog( text="#meta.name# Activity started", application=false, file=getLogFileName() );
+        	writelog( text="#meta.name# Activity started", application=isApplication(), file=getLogFileName() );
         }
         catch(Any e)
         {
-        	writelog( text=e.message, application=false, file=getExceptionLogFileName() );
+        	writelog( text=e.message, application=isApplication(), file=getExceptionLogFileName() );
         }
 
 	}
@@ -44,18 +52,23 @@
 		try
         {        	
         	var act = arguments.activity;		
-			writelog(text="#meta.name# Activity executed", application=false, file=getLogFileName );	
-			act.onActivityStart();			
+			writelog(text="#meta.name# Activity executed", application=isApplication(), file=getLogFileName );	
+			 sleep( getSleepTime() );
+			act.onActivityStart();	
+			 sleep( getSleepTime() );		
 			act.predecessor();	
-			act.process();				
+			 sleep( getSleepTime() );
+			act.process();
+			 sleep( getSleepTime() );				
 			act.successor();
+			 sleep( getSleepTime() );
 			act.onActivityEnd();
 			
 			return true;
         }
         catch(Any e)
         {
-        	writelog( text=e.message, application=false, file=getExceptionLogFileName() );
+        	writelog( text=e.message, application=isApplication(), file=getExceptionLogFileName() );
         }
 
 	}
@@ -64,12 +77,12 @@
 	{
 		try
         {
-        	writelog( text="#meta.name# Activity predecessor started", application=false, file=getLogFileName() );
+        	writelog( text="#meta.name# Activity predecessor started", application=isApplication(), file=getLogFileName() );
 		
         }
         catch(Any e)
         {
-        	writelog( text=e.message, application=false, file=getExceptionLogFileName() );
+        	writelog( text=e.message, application=isApplication(), file=getExceptionLogFileName() );
         }
 	}
 		
@@ -77,12 +90,12 @@
 	{
 		try
         {
-        	writelog( text="#meta.name# Activity process started", application=false, file=getLogFileName() );
+        	writelog( text="#meta.name# Activity process started", application=isApplication(), file=getLogFileName() );
 		
         }
         catch(Any e)
         {
-        	writelog( text=e.message, application=false, file=getExceptionLogFileName() );
+        	writelog( text=e.message, application=isApplication(), file=getExceptionLogFileName() );
         }
 	}
 		
@@ -90,12 +103,12 @@
 	{
 		try
         {
-        	writelog( text="#meta.name# Activity successor started", application=false, file=getLogFileName() );
+        	writelog( text="#meta.name# Activity successor started", application=isApplication(), file=getLogFileName() );
 		
         }
         catch(Any e)
         {
-        	writelog( text=e.message, application=false, file=getExceptionLogFileName() );
+        	writelog( text=e.message, application=isApplication(), file=getExceptionLogFileName() );
         }
 	}
 	
@@ -103,13 +116,13 @@
 	{
 		try
          {
-         	writelog( text="#meta.name# Activity ended", application=false, file=getLogFileName() );
-			writelog( text="----------------------------#meta.name#--------------------------------", application=false, file=getLogFileName() );
+         	writelog( text="#meta.name# Activity ended", application=isApplication(), file=getLogFileName() );
+			writelog( text="----------------------------#meta.name#--------------------------------", application=isApplication(), file=getLogFileName() );
 		
          }
          catch(Any e)
          {
-         	writelog(text=e.message, application=false, file=getExceptionLogFileName() );
+         	writelog(text=e.message, application=isApplication(), file=getExceptionLogFileName() );
          }
 	}
 }
